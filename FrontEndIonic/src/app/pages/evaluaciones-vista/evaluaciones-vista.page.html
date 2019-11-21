@@ -1,0 +1,49 @@
+<ion-header>
+    <ion-toolbar color="dark">
+      <ion-title>
+        Evaluaciones del curso
+      </ion-title>
+    </ion-toolbar>
+  </ion-header>
+  
+  <ion-content>
+  
+      <ion-card class="welcome-card" *ngFor="let eva of eva_tipo1">
+        <img src="" alt="" />
+        <ion-card-header>
+            
+          <ion-card-subtitle>Sección:  {{eva.seccion}}    </ion-card-subtitle>
+          <ion-card-title>{{eva.nombre}} </ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <p>Curso:  {{eva.curso}}</p>
+          <p>Estado : {{eva.estado}}</p>
+          <p>Orden Preguntas: {{eva.orden}}</p>
+          <p>Tipo Evaluación : {{eva.tipo_evaluacion}}</p>
+          <ion-button color="tertiary" expand="full" >Realizar</ion-button>
+        </ion-card-content>
+      </ion-card>
+      
+      
+
+
+
+      <ion-card class="welcome-card" *ngFor="let eva of eva_tipo2">
+          <img src="" alt="" />
+          <ion-card-header>
+              
+            <ion-card-subtitle>Sección:  {{eva.seccion}}    </ion-card-subtitle>
+            <ion-card-title>{{eva.nombre}} </ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <p>Curso:  {{eva.curso}}</p>
+            <p>Estado : {{eva.estado}}</p>
+            <p>Orden Preguntas: {{eva.orden}}</p>
+            <p>Tipo Evaluación : {{eva.tipo_evaluacion}}</p>
+            <ion-button color="secondary" expand="full" >Realizar</ion-button>
+          </ion-card-content>
+        </ion-card>
+  
+  
+  </ion-content>
+  

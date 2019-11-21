@@ -1,0 +1,150 @@
+<ion-header>
+    <ion-toolbar color="dark">
+      <ion-title test-center >Crear Actividad</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  
+  <ion-content >
+
+      <form [formGroup]="loginForm">
+
+
+          <ion-item>
+              <ion-label>Elegir Curso del que se desea crear Actividad</ion-label>
+              <ion-select  okText="Elegir" cancelText="Descartar" (ionChange)="eventoAsignacion($event)">
+                <ion-select-option *ngFor="let curso of asignaciones" [value]="curso.cod_asignacion_auxiliar" > {{curso.curso }} -- Sec. {{curso.seccion}}</ion-select-option>
+              </ion-select>
+            </ion-item>
+
+
+          <ion-item> 
+              <ion-label position="floating">Nombre</ion-label>  
+              <ion-input type="text" formControlName="nombre"  [(ngModel)]="evaluacion.nombre"></ion-input>
+             </ion-item>
+           <div class="error-messages">
+              <ng-container *ngFor="let error of error_messages.nombre" >
+                 <div class="error-message" *ngIf="loginForm.get('nombre').hasError(error.type) && (loginForm.get('nombre').dirty || loginForm.get('nombre').touched)"  >
+                   {{error.message}}
+                 </div> 
+              </ng-container>   
+           </div>
+      
+
+           <ion-item>
+              <ion-label>Tipo de Evaluación</ion-label>
+              <ion-select  okText="Elegir" cancelText="Descartar" (ionChange)="eventoTipo($event)">
+                <ion-select-option value="Selección Múltiple" >Selección Múltiple</ion-select-option>
+                <ion-select-option value="Verdadero/Falso" >Verdadero/Falso</ion-select-option>
+                <ion-select-option value="Ordering" >Ordering</ion-select-option>
+                <ion-select-option value="Matching" >Matching</ion-select-option>
+
+
+              </ion-select>
+            </ion-item>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+  
+        
+          <ion-button [disabled]="!loginForm.valid" shape="round" size="default" expand="block" color="dark" (click)="saveEvaluacion()" >Crear</ion-button>
+          <br>
+          <br>
+        </form>
+
+
+
+
+
+    <ion-card class="welcome-card" *ngFor="let eva of eva_tipo1">
+        <img src="" alt="" />
+        <ion-card-header>
+            
+          <ion-card-subtitle>{{eva.curso}}</ion-card-subtitle>
+          <ion-card-title>{{eva.nombre}}</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+            <p>Sección:  {{eva.seccion}}</p>
+            <p>Estado : {{eva.estado}}</p>
+            <p>Orden Preguntas: {{eva.orden}}</p>
+            <p>Tipo Evaluación : {{eva.tipo_evaluacion}}</p>
+            <ion-button size="small"color="light" [routerLink]="['/evaluacion-pregunta-fv', eva.cod_evaluacion]">Agregar Preguntas</ion-button>
+            <ion-button size="small"color="tertiary" (click)="orden(eva.cod_evaluacion)">Cambiar orden</ion-button>
+            <ion-button size="small"color="medium" (click)="estado(eva.cod_evaluacion)">Habilitar</ion-button>
+          <ion-button size="small"color="secondary" (click)="deleteEvaluacion(eva.cod_evaluacion)">Eliminar</ion-button>
+        </ion-card-content>
+      </ion-card>
+    
+
+      <ion-card class="welcome-card" *ngFor="let eva of eva_tipo2">
+          <img src="" alt="" />
+          <ion-card-header>
+              
+            <ion-card-subtitle>{{eva.curso}}</ion-card-subtitle>
+            <ion-card-title>{{eva.nombre}}</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+              <p>Sección:  {{eva.seccion}}</p>
+              <p>Estado : {{eva.estado}}</p>
+              <p>Orden Preguntas: {{eva.orden}}</p>
+              <p>Tipo Evaluación : {{eva.tipo_evaluacion}}</p>
+              <ion-button size="small"color="tertiary" [routerLink]="['/evaluacion-pregunta-sm', eva.cod_evaluacion]">Agregar Preguntas</ion-button>
+              <ion-button size="small"color="medium" (click)="orden(eva.cod_evaluacion)">Cambiar orden</ion-button>
+              <ion-button size="small"color="secondary" (click)="estado(eva.cod_evaluacion)">Habilitar</ion-button>
+            <ion-button size="small"color="light" (click)="deleteEvaluacion(eva.cod_evaluacion)">Eliminar</ion-button>
+          </ion-card-content>
+        </ion-card>
+      
+      <ion-card class="welcome-card" *ngFor="let eva of eva_orde">
+          <img src="" alt="" />
+          <ion-card-header>
+              
+            <ion-card-subtitle>{{eva.curso}}</ion-card-subtitle>
+            <ion-card-title>{{eva.nombre}}</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+              <p>Sección:  {{eva.seccion}}</p>
+              <p>Estado : {{eva.estado}}</p>
+              <p>Orden Preguntas: {{eva.orden}}</p>
+              <p>Tipo Evaluación : {{eva.tipo_evaluacion}}</p>
+              <ion-button size="small"color="medium" [routerLink]="['/evaluacion-pregunta-orde', eva.cod_evaluacion]">Agregar Preguntas</ion-button>
+              <ion-button size="small"color="secondary" (click)="orden(eva.cod_evaluacion)">Cambiar orden</ion-button>
+              <ion-button size="small"color="light" (click)="estado(eva.cod_evaluacion)">Habilitar</ion-button>
+            <ion-button size="small"color="tertiary" (click)="deleteEvaluacion(eva.cod_evaluacion)">Eliminar</ion-button>
+          </ion-card-content>
+        </ion-card>
+      
+      <ion-card class="welcome-card" *ngFor="let eva of eva_mat">
+          <img src="" alt="" />
+          <ion-card-header>
+              
+            <ion-card-subtitle>{{eva.curso}}</ion-card-subtitle>
+            <ion-card-title>{{eva.nombre}}</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+              <p>Sección:  {{eva.seccion}}</p>
+              <p>Estado : {{eva.estado}}</p>
+              <p>Orden Preguntas: {{eva.orden}}</p>
+              <p>Tipo Evaluación : {{eva.tipo_evaluacion}}</p>
+              <ion-button size="small"color="secondary" [routerLink]="['/evaluacion-pregunta-mat', eva.cod_evaluacion]">Agregar Preguntas</ion-button>
+              <ion-button size="small"color="success" (click)="orden(eva.cod_evaluacion)">Cambiar orden</ion-button>
+              <ion-button size="small"color="tertiary" (click)="estado(eva.cod_evaluacion)">Habilitar</ion-button>
+            <ion-button size="small"color="warning" (click)="deleteEvaluacion(eva.cod_evaluacion)">Eliminar</ion-button>
+          </ion-card-content>
+        </ion-card>
+      
+
+
+  </ion-content>

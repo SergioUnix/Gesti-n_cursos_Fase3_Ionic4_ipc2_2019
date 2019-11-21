@@ -1,0 +1,31 @@
+<ion-header>
+    <ion-toolbar color="dark">
+      <ion-title test-center >Crear Actividad</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  
+  <ion-content >
+
+
+
+    <ion-card class="welcome-card" *ngFor="let ac of notas">
+        <img src="" alt="" />
+        <ion-card-header>
+            
+          <ion-card-subtitle>     </ion-card-subtitle>
+          <ion-card-title>Ac. {{ac.actividad}} </ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+            <p>Nota Obtenida: {{ac.nota_obtenida}}</p>
+          
+         
+        </ion-card-content>
+      </ion-card>
+    
+
+
+
+
+
+
+  </ion-content>

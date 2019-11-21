@@ -1,0 +1,36 @@
+<ion-header>
+    <ion-toolbar color="dark">
+      <ion-title test-center >Desasignar Auxiliar</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  
+  <ion-content >
+
+
+
+
+<ion-searchbar placeholder="auxiliares por nombre o curso"type="text" class="form-control" name="filterPost"  [(ngModel)]="filterPost"></ion-searchbar>
+
+
+
+  <ion-card class="welcome-card" *ngFor="let aux of asig_Auxiliares | auxiliar:filterPost">
+      <img src="" alt="" />
+      <ion-card-header>
+          
+        <ion-card-subtitle>Auxiliar {{aux.auxiliar}}     </ion-card-subtitle>
+        <ion-card-title>{{aux.curso}} <ion-button size="small"color="warning" [routerLink]="['/auxiliar-desasignar-motivo/', aux.cod_asignacion_auxiliar]">Desasignar</ion-button></ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p>Semestre: {{ aux.semestre }}</p>
+        <p>Año: {{ aux.anio }}  </p>
+        <p>Fecha limite de Asignación: {{aux.fecha_limite | date: 'yyy-MM-dd'}} </p>
+
+        <p>Sección {{ aux.seccion }}</p>
+        <p>Inicio: {{aux.hora_inicio}} Final:{{ aux.hora_final }} </p>
+      </ion-card-content>
+    </ion-card>
+  
+  
+  
+  
+  </ion-content>

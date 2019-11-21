@@ -1,0 +1,36 @@
+<ion-header>
+    <ion-toolbar color="dark">
+      <ion-title test-center >Gestión de Usuarios</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  
+  <ion-content >
+
+
+
+        <ion-card class="welcome-card" *ngFor="let usuario of usuarios">
+            <img src="" alt="" />
+            <ion-card-header>
+                
+              <ion-card-subtitle><p>Carnet : {{usuario.carne}}</p>     </ion-card-subtitle>
+              <ion-card-title><p>Nombre : {{usuario.nombre}}</p> </ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+                <p>Correo : {{usuario.correo}}</p>
+                <p>Password : {{usuario.pasword}}</p>
+                <ion-button size="small"color="danger" [routerLink]="['/lista-usuarios-edit', usuario.cod_usuario]">Edit</ion-button>
+            </ion-card-content>
+          </ion-card>
+        
+
+
+
+
+
+
+
+
+
+
+  </ion-content>
+  

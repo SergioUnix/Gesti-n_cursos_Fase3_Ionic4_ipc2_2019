@@ -1,0 +1,117 @@
+<ion-header>
+    <ion-toolbar color="dark">
+      <ion-title test-center >Registro de Auxiliar</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  
+  <ion-content >
+
+  
+      <form [formGroup]="loginForm">
+
+          <ion-item> 
+              <ion-label position="floating">Nombre</ion-label>  
+              <ion-input type="text" formControlName="nombre" [(ngModel)]="usuario.nombre" ></ion-input>
+             </ion-item>
+           <div class="error-messages">
+              <ng-container *ngFor="let error of error_messages.nombre" >
+                 <div class="error-message" *ngIf="loginForm.get('nombre').hasError(error.type) && (loginForm.get('nombre').dirty || loginForm.get('nombre').touched)"  >
+                   {{error.message}}
+                 </div> 
+              </ng-container>   
+           </div>
+      
+      
+            
+            
+             <ion-item> 
+                <ion-label position="floating">Carnet</ion-label>  
+                <ion-input type="carne" formControlName="carne"  [(ngModel)]="usuario.carne"></ion-input>
+             </ion-item>
+                <div class="error-messages">
+                   <ng-container *ngFor="let error of error_messages.carne" >
+                      <div class="error-message" *ngIf="loginForm.get('carne').hasError(error.type) && (loginForm.get('carne').dirty || loginForm.get('carne').touched)"  >
+                        {{error.message}}
+                      </div> 
+                    </ng-container>   
+                </div>
+  
+  
+  
+
+
+      <ion-item> 
+          <ion-label position="floating">Correo</ion-label>  
+          <ion-input type="text" formControlName="correo" [(ngModel)]="usuario.correo" ></ion-input>
+         </ion-item>
+       <div class="error-messages">
+          <ng-container *ngFor="let error of error_messages.correo" >
+             <div class="error-message" *ngIf="loginForm.get('correo').hasError(error.type) && (loginForm.get('correo').dirty || loginForm.get('correo').touched)"  >
+               {{error.message}}
+             </div> 
+          </ng-container>   
+       </div>
+  
+  
+        
+        
+         <ion-item> 
+            <ion-label position="floating">Password</ion-label>  
+            <ion-input type="password" formControlName="password"  [(ngModel)]="usuario.pasword"></ion-input>
+         </ion-item>
+            <div class="error-messages">
+               <ng-container *ngFor="let error of error_messages.password" >
+                  <div class="error-message" *ngIf="loginForm.get('password').hasError(error.type) && (loginForm.get('password').dirty || loginForm.get('password').touched)"  >
+                    {{error.message}}
+                  </div> 
+                </ng-container>   
+            </div>
+  
+
+          <ion-item>
+              <ion-label>Tipo Rol</ion-label>
+              <ion-select value="2" okText="Elegir" cancelText="Descartar" (ionChange)="eventoTipo($event)">
+                <ion-select-option value="1" disabled>Administrador</ion-select-option>
+                <ion-select-option value="2">Auxiliar</ion-select-option>
+                <ion-select-option value="3">Estudiante</ion-select-option>
+
+              </ion-select>
+            </ion-item>
+
+
+  
+        
+          <ion-button [disabled]="!loginForm.valid" shape="round" size="default" expand="block" color="dark" (click)="saveUsuario()" >Entrar</ion-button>
+          <br>
+          <br>
+        </form>
+
+
+
+        <ion-searchbar placeholder="Buscar Auxiliares"type="text" class="form-control" name="filterPost"  [(ngModel)]="filterPost"></ion-searchbar>
+
+        <ion-card class="welcome-card" *ngFor="let usuario of usuarios | filter:filterPost">
+            <img src="" alt="" />
+            <ion-card-header>
+                
+              <ion-card-subtitle><p>Carnet : {{usuario.carne}}</p>     </ion-card-subtitle>
+              <ion-card-title><p>Nombre : {{usuario.nombre}}</p> <ion-button size="small"color="danger" (click)="deleteUsuario(usuario.cod_usuario)">Eliminar</ion-button></ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+                <p>Correo : {{usuario.correo}}</p>
+                <p>Password : {{usuario.pasword}}</p>
+            </ion-card-content>
+          </ion-card>
+        
+
+ 
+
+
+
+
+
+
+
+
+  </ion-content>
+  

@@ -1,0 +1,323 @@
+
+-- -----------------------------------------------------
+-- Database Proyecto_Ionic
+-- drop database `Proyecto_Ionic`;
+-- -----------------------------------------------------
+create database Proyecto_Ionic;
+USE `Proyecto_Ionic` ;
+
+-- -----------------------------------------------------
+-- Table Rol 
+-- -----------------------------------------------------
+CREATE TABLE rol (
+  `cod_rol` INT NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(45) NULL,
+  PRIMARY KEY (`cod_rol`));
+INSERT INTO rol(`nombre`) VALUES ('Administrador'),('Auxiliar'),('Estudiante');
+
+-- -----------------------------------------------------
+-- Table Usuario
+-- -----------------------------------------------------
+CREATE TABLE usuario (
+  `cod_usuario` INT NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(45) NULL,
+  `carne` INT NULL,
+  `correo` VARCHAR(45) NULL,
+  `pasword` VARCHAR(45) NULL,
+  `cod_rol_fk` INT NOT NULL,
+  PRIMARY KEY (`cod_usuario`),
+  CONSTRAINT `fk_Usuario_Rol` FOREIGN KEY (`cod_rol_fk`) REFERENCES rol (`cod_rol`)
+  );
+INSERT INTO usuario(`nombre`,`carne`,`correo`,`pasword`,`cod_rol_fk`) VALUES ('Sergio',201020252,'SergioUnix@gmail.com',1234,1),
+('Made',201020,'MadeLor@gmail.com',1234,2), ('Vero',201020,'Vero@gmail.com',123,2), ('Sergio',20102,'Sergio@gmail.com',1234,2),('Alejandro',2018,'Alejandro@gmail.com',12345,3),('Michi',201478,'Michi@gmail.com',12345,3),
+('Cesar',2044,'Cesar@gmail.com',12345,3),('Teresa',204718,'Teresa@gmail.com',12345,3),('Fernando',209918,'Fernando@gmail.com',12345,3);
+
+-- -----------------------------------------------------
+-- Table Horario
+-- -----------------------------------------------------
+CREATE TABLE horario (
+  `cod_horario` INT NOT NULL AUTO_INCREMENT,
+  `hora_inicio` TIME NULL,
+  `hora_final` TIME NULL,
+  PRIMARY KEY (`cod_horario`));
+INSERT INTO horario (`hora_inicio`,`hora_final`)VALUES('07:10:00','07:50:00'),('08:00:00','08:50:00'),('09:10:00','10:00:00');
+INSERT INTO horario (`hora_inicio`,`hora_final`)VALUES('10:10:00','11:00:00'),('11:10:00','12:00:00'),('12:20:00','13:00:00');
+-- -----------------------------------------------------
+-- Table Seccion
+-- -----------------------------------------------------
+CREATE TABLE seccion (
+  `cod_seccion` INT NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(45) NULL,
+  PRIMARY KEY (`cod_seccion`));
+INSERT INTO seccion(`nombre`) values('A'),('B'),('C'),('D'),('E'),('F');
+
+
+
+-- -----------------------------------------------------
+-- Table Curso
+-- -----------------------------------------------------
+CREATE TABLE curso (
+  `cod_curso` INT NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(45) NOT NULL,
+  `descripcion` VARCHAR(45) NULL,
+  `estado` varchar(20)  default 'Disponible',
+  `cod_horario_fk` INT  NULL,
+  `cod_seccion_fk` INT  NULL,
+  PRIMARY KEY (`cod_curso`),
+  CONSTRAINT `fk_Curso_horario1` FOREIGN KEY (`cod_horario_fk`) REFERENCES horario (`cod_horario`) ON DELETE CASCADE,
+  CONSTRAINT `fk_Curso_Seccion1` FOREIGN KEY (`cod_seccion_fk`) REFERENCES seccion (`cod_seccion`) ON DELETE CASCADE);
+  
+INSERT INTO `proyecto_ionic`.`curso` (`nombre`,`descripcion`,`cod_horario_fk`,`cod_seccion_fk`)
+VALUES('IPC2','texto de descripcion',1,1),('LFP','texto de descripcion',2,2),('Compi 1','texto de descripcion',3,3),('Mate 2','texto de descripcion',4,4);
+
+-- -----------------------------------------------------
+-- Table Asignacion_auxiliar
+-- -----------------------------------------------------
+CREATE TABLE asignacion_auxiliar (
+  `cod_asignacion_auxiliar` INT NOT NULL AUTO_INCREMENT,
+  `semestre` VARCHAR(45) NULL,
+  `año` INT NULL,
+  `fecha_limite` DATE NULL,
+  `cod_usuario_fk` INT NOT NULL,
+  `cod_curso_fk` INT NOT NULL,
+  PRIMARY KEY (`cod_asignacion_auxiliar`),
+  CONSTRAINT `fk_Asignacion_auxiliar_Usuario1` FOREIGN KEY (`cod_usuario_fk`) REFERENCES usuario (`cod_usuario`),
+  CONSTRAINT `fk_Asignacion_auxiliar_Curso1` FOREIGN KEY (`cod_curso_fk`) REFERENCES curso (`cod_curso`));
+INSERT INTO `asignacion_auxiliar`(`semestre`,`año`,`fecha_limite`,`cod_usuario_fk`,`cod_curso_fk`)
+VALUES('Segundo','2019','2019-10-20',2,1),('Segundo','2019','2019-10-20',3,2),('Segundo','2019','2019-10-20',4,3);
+UPDATE `curso` SET `estado` = 'Ocupado' WHERE `cod_curso` =1;
+
+-- -----------------------------------------------------
+-- Table Asignacion_estudiante
+-- -----------------------------------------------------
+CREATE TABLE asignacion_estudiante (
+  `cod_asignacion_estudiante` INT NOT NULL AUTO_INCREMENT,
+  `cod_asignacion_auxiliar_fk` INT NOT NULL,
+  `cod_usuario_fk` INT NOT NULL,
+  PRIMARY KEY (`cod_asignacion_estudiante`),
+  CONSTRAINT `fk_Asignacion` 
+  FOREIGN KEY (`cod_asignacion_auxiliar_fk`) REFERENCES asignacion_auxiliar (`cod_asignacion_auxiliar`) ON DELETE CASCADE,
+  CONSTRAINT `fk_Asignacion_estudiante` 
+  FOREIGN KEY (`cod_usuario_fk`) REFERENCES usuario (`cod_usuario`));
+
+INSERT INTO `asignacion_estudiante`(`cod_asignacion_auxiliar_fk`,`cod_usuario_fk`)
+VALUES(1,5),(1,6),(1,7),(1,8);
+
+
+-- -----------------------------------------------------
+-- Table evaluacion
+-- -----------------------------------------------------
+CREATE TABLE evaluacion (
+  `cod_evaluacion` INT NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(20) NOT NULL,
+  `orden` varchar(20) default 'Normal',
+  `estado` varchar(20)  default 'Deshabilitada',
+  `tipo_evaluacion` varchar(20) NOT NULL,
+  `cod_asignacion_auxiliar_fk` INT NOT NULL,
+  `usuario_fk_eva` INT NOT NULL,
+  PRIMARY KEY (`cod_evaluacion`),
+  CONSTRAINT `fk_evalua_Asig` FOREIGN KEY (`cod_asignacion_auxiliar_fk`)
+			REFERENCES asignacion_auxiliar (`cod_asignacion_auxiliar`) ON DELETE CASCADE,
+  CONSTRAINT `fk_evalua_usu` FOREIGN KEY (`usuario_fk_eva`)
+			REFERENCES usuario (`cod_usuario`) 
+  );
+    INSERT INTO `proyecto_ionic`.`evaluacion`
+(`nombre`,`tipo_evaluacion`,`cod_asignacion_auxiliar_fk`,`usuario_fk_eva`)
+VALUES('Prueba corta 1','Selección Múltiple',1,2),('Prueba corta 2','Verdadero/Falso',1,2);
+
+
+
+-- -----------------------------------------------------
+-- Table pregunta
+-- -----------------------------------------------------
+CREATE TABLE pregunta (
+  `cod_pregunta` INT NOT NULL AUTO_INCREMENT,
+  `pregunta` varchar(250)  NULL,
+  `correcta` varchar(80)  NULL,
+  `respuesta` varchar(80)  NULL,
+  `opcion1` varchar(80)   NULL,
+  `opcion2` varchar(80)  NULL,
+  `opcion3` varchar(80)  NULL,
+  `opcion4` varchar(80)  NULL,
+  `opcion5` varchar(80)  NULL,
+  `cod_evaluacion_fk` INT  NULL,
+   PRIMARY KEY (`cod_pregunta`),
+  CONSTRAINT `fk_evalua` FOREIGN KEY (`cod_evaluacion_fk`)
+			REFERENCES evaluacion (`cod_evaluacion`) ON DELETE CASCADE
+  
+  );
+  INSERT INTO `proyecto_ionic`.`pregunta`
+(`pregunta`,`correcta`,`opcion1`,`opcion2`,`opcion3`,`cod_evaluacion_fk`)
+VALUES('que es DML?', 'Un Lenguaje', 'Sintaxis', 'Un Programa','Una BD',1),
+('que es Angular?', 'Un FrameWork', 'Una ER', 'Una Gramatica','Un Automata',1);
+
+INSERT INTO `proyecto_ionic`.`pregunta`
+(`pregunta`,`correcta`,`cod_evaluacion_fk`)
+VALUES('JavaScript (abreviado comúnmente JS) es un lenguaje de programación interpretado?', 'Verdadero', 2),
+('MySQL Cluster es una base de datos transaccional de código PAGADO?', 'Falso',2);
+
+
+-- -----------------------------------------------------
+-- Table Foro
+-- -----------------------------------------------------
+CREATE TABLE foro (
+  `cod_foro` INT NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(45) NOT NULL,
+  `descripcion` varchar(90) NOT NULL,
+  `fecha` date NOT NULL,
+  `hora_limite` Time NOT NULL,
+  `cod_asignacion_auxiliar_fk` INT NOT NULL,
+  PRIMARY KEY (`cod_foro`),
+  CONSTRAINT `fk_Foro_Asignacion_auxiliar1` FOREIGN KEY (`cod_asignacion_auxiliar_fk`)
+  REFERENCES asignacion_auxiliar (`cod_asignacion_auxiliar`) ON DELETE CASCADE);
+INSERT INTO `proyecto_ionic`.`foro`
+(`nombre`,`descripcion`,`fecha`,`hora_limite`,`cod_asignacion_auxiliar_fk`)
+VALUES('Foro de IpC2','Se puede comentar aca temas del curso ','2019-08-12','23:59:00',1),
+('Foro de Lenguajes','Se puede comentar aca temas del curso ','2019-08-12','23:59:00',2),
+('Foro de Compiladores 1','Se puede comentar aca temas del curso ','2019-08-12','23:59:00',3);
+
+
+
+-- -----------------------------------------------------
+-- Table Publicacion
+-- -----------------------------------------------------
+CREATE TABLE publicacion(
+  `cod_publicacion` INT NOT NULL AUTO_INCREMENT,
+  `comentario` VARCHAR(250) NULL,
+  `me_gusta` INT default '0', 
+  `ref_publi` INT NULL,
+  `creador_pu_usuario` INT  NULL,
+  `cod_foro_fk` INT  NULL,
+  PRIMARY KEY (`cod_publicacion`),
+  CONSTRAINT `fk_creo_pu_usuario`
+    FOREIGN KEY (`ref_publi`) REFERENCES publicacion (`cod_publicacion`),
+  CONSTRAINT `fk_resp_pu_usuario`
+    FOREIGN KEY (`creador_pu_usuario`) REFERENCES usuario (`cod_usuario`),
+  CONSTRAINT `fk_cod_foro_fk`
+    FOREIGN KEY (`cod_foro_fk`) REFERENCES foro (`cod_foro`)ON DELETE CASCADE);
+INSERT INTO `proyecto_ionic`.`publicacion`
+(`comentario`,`creador_pu_usuario`,`cod_foro_fk`)
+VALUES ('Primer publicación del usuario Cesar',7,1),('Segunda publicación del usuario Cesar',7,1);
+
+INSERT INTO `proyecto_ionic`.`publicacion`
+(`comentario`,`ref_publi`,`creador_pu_usuario`)
+VALUES ('Respuesta 1 de Aux',1,2), ('Respuesta 1 de Aux',2,2);
+
+-- -----------------------------------------------------
+-- Table Mensaje
+-- -----------------------------------------------------
+CREATE TABLE mensaje (
+  `cod_mensaje` INT NOT NULL AUTO_INCREMENT,
+  `asunto` VARCHAR(45) NOT NULL,
+  `cuerpo` VARCHAR(125) NOT NULL,
+  `archivos_adjuntos` VARCHAR(45) NULL,
+   `fecha` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  `cod_usuario_remitente` INT  NULL,
+  `cod_usuario_destinatario` INT  NULL,
+  PRIMARY KEY (`cod_mensaje`),
+  CONSTRAINT `fk_Mensaje_Usuario2`
+    FOREIGN KEY (`cod_usuario_remitente`) REFERENCES usuario (`cod_usuario`)ON DELETE CASCADE,
+  CONSTRAINT `fk_Mensaje_Usuario1`
+    FOREIGN KEY ( `cod_usuario_destinatario`) REFERENCES usuario (`cod_usuario`)ON DELETE CASCADE);
+    
+INSERT INTO `proyecto_ionic`.`mensaje`
+(`asunto`,`cuerpo`,`archivos_adjuntos`,`cod_usuario_remitente`,`cod_usuario_destinatario`)
+VALUES('primer mensaje', 'mensaje que se enviara','/ruta_de_archivo', 2,7),('segundo mensaje', 'mensaje que se enviara','/ruta_de_archivo2', 7,2),
+('primer mensaje', 'mensaje que se enviara','/ruta_de_archivo', 3,7),('primer mensaje', 'mensaje que se enviara','/ruta_de_archivo', 7,3);
+
+
+-- -----------------------------------------------------
+-- Table Actividad
+-- -----------------------------------------------------
+CREATE TABLE actividad (
+  `cod_actividad` INT NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(85) NULL,
+  `hora` Time  NULL,
+  `fecha_limite` date  NULL,
+  `ponderacion` VARCHAR(45)  NULL,
+  `archivo` varchar(150) NULL,
+  `texto` varchar(350) NULL,
+  `ruta_archivo` varchar(350) NULL,
+  `cod_asignacion_auxiliar_fk` INT NULL,
+  `cod_usuario_fk` INT NULL,
+  `cod_actividad_padre` INT NULL,
+   PRIMARY KEY (`cod_actividad`),
+  CONSTRAINT `fk_Actividad` FOREIGN KEY (`cod_asignacion_auxiliar_fk`) REFERENCES asignacion_auxiliar (`cod_asignacion_auxiliar`)ON DELETE CASCADE,
+    CONSTRAINT `fk_actividad_padre`
+    FOREIGN KEY (`cod_actividad_padre`) REFERENCES actividad (`cod_actividad`),
+  CONSTRAINT `fk_usuario` FOREIGN KEY (`cod_usuario_fk`) REFERENCES usuario (`cod_usuario`));
+INSERT INTO `proyecto_ionic`.`actividad`
+(`nombre`,`hora`,`fecha_limite`,`ponderacion`,`archivo`,`cod_asignacion_auxiliar_fk`,`cod_usuario_fk`)
+VALUES('Resumen de Conferencia', '23:59:00','2019-08-12','20','true',1,2),('Ensayo de Metodologias', '23:59:00','2019-09-01','15','false',1,2);
+
+
+-- -----------------------------------------------------
+-- Table Nota
+-- -----------------------------------------------------
+CREATE TABLE nota (
+  `cod_nota` INT NOT NULL AUTO_INCREMENT,
+  `nota_obtenida` INT NULL,
+  `Usuario_cod_usuario` INT NOT NULL,
+  `Actividad_cod_actividad` INT NOT NULL,
+  PRIMARY KEY (`cod_nota`),
+  CONSTRAINT `fk_Nota_Usuario1`
+    FOREIGN KEY (`Usuario_cod_usuario`) REFERENCES usuario(`cod_usuario`),
+  CONSTRAINT `fk_Nota_Actividad1`
+    FOREIGN KEY (`Actividad_cod_actividad`) REFERENCES actividad (`cod_actividad`)ON DELETE CASCADE);
+
+
+-- -----------------------------------------------------
+-- Table Asistencia
+-- -----------------------------------------------------
+CREATE TABLE asistencia (
+  `cod_asistencia` INT NOT NULL AUTO_INCREMENT,
+  `asitencia` VARCHAR(45) NULL,
+  `fecha` DATE NULL,
+  `Asig_estu_cod_asignacion` INT NOT NULL,
+  PRIMARY KEY (`cod_asistencia`),
+  CONSTRAINT `fk_asiten_estu`
+    FOREIGN KEY (`Asig_estu_cod_asignacion`) REFERENCES asignacion_estudiante (`cod_asignacion_estudiante`)ON DELETE CASCADE);
+
+-- -----------------------------------------------------
+-- Table Estado
+-- -----------------------------------------------------
+CREATE TABLE estado (
+  `cod_estado` INT NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(45) NULL,
+  PRIMARY KEY (`cod_estado`));
+INSERT INTO `proyecto_ionic`.`estado`
+(`nombre`)VALUES('Enviado'),('Recibido'),('En Proceso'),('Finalizado');
+
+-- -----------------------------------------------------
+-- Table Ticket
+-- -----------------------------------------------------
+CREATE TABLE ticket (
+  `cod_ticket` INT NOT NULL AUTO_INCREMENT,
+  `asunto` VARCHAR(100) NULL,
+  `cuerpo` VARCHAR(250) NULL, 
+  `cod_estado_fkt` INT NULL,
+  `cod_usuario_fkt` INT  NULL,
+  PRIMARY KEY (`cod_ticket`),
+    CONSTRAINT `fkEstado`
+    FOREIGN KEY (`cod_estado_fkt`) REFERENCES estado (`cod_estado`),
+  CONSTRAINT `fkUsuario1`
+    FOREIGN KEY (`cod_usuario_fkt`)REFERENCES usuario (`cod_usuario`));
+
+INSERT INTO `proyecto_ionic`.`ticket`
+(`asunto`,`cuerpo`,`cod_estado_fkt`,`cod_usuario_fkt`)
+VALUES('[IPC2]Asunto','El Auxiliar no dio laboratorio la semana que paso',1,7),('[IPC2]Tarea','El Auxiliar no me califico la práctica ',1,7);
+
+
+-- -----------------------------------------------------
+-- Table Desasignacion
+-- -----------------------------------------------------
+CREATE TABLE desasignacion (
+  `cod_desasignacion` INT NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(45) NULL,
+  `carnet` VARCHAR(45) NULL,
+  `curso` VARCHAR(45) NULL,
+  `motivo` VARCHAR(45) NULL,
+  `cod_usuario_fk` INT NOT NULL,
+  PRIMARY KEY (`cod_desasignacion`),
+  CONSTRAINT `fk_Desasignacion_Usuario1`
+    FOREIGN KEY (`cod_usuario_fk`) REFERENCES usuario (`cod_usuario`));

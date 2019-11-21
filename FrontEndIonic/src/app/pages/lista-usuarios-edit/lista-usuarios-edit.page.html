@@ -1,0 +1,91 @@
+<ion-header>
+    <ion-toolbar color="dark">
+      <ion-title test-center >Actualizar Usuario</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  
+  <ion-content >
+
+  
+      <form [formGroup]="loginForm">
+
+          <ion-item> 
+              <ion-label position="floating">Nombre</ion-label>  
+              <ion-input type="text" formControlName="nombre" [(ngModel)]="usuario.nombre" ></ion-input>
+             </ion-item>
+           <div class="error-messages">
+              <ng-container *ngFor="let error of error_messages.nombre" >
+                 <div class="error-message" *ngIf="loginForm.get('nombre').hasError(error.type) && (loginForm.get('nombre').dirty || loginForm.get('nombre').touched)"  >
+                   {{error.message}}
+                 </div> 
+              </ng-container>   
+           </div>
+      
+      
+            
+            
+             <ion-item> 
+                <ion-label position="floating">Carnet</ion-label>  
+                <ion-input type="carne" formControlName="carne"  [(ngModel)]="usuario.carne"></ion-input>
+             </ion-item>
+                <div class="error-messages">
+                   <ng-container *ngFor="let error of error_messages.carne" >
+                      <div class="error-message" *ngIf="loginForm.get('carne').hasError(error.type) && (loginForm.get('carne').dirty || loginForm.get('carne').touched)"  >
+                        {{error.message}}
+                      </div> 
+                    </ng-container>   
+                </div>
+  
+  
+  
+
+
+      <ion-item> 
+          <ion-label position="floating">Correo</ion-label>  
+          <ion-input type="text" formControlName="correo" [(ngModel)]="usuario.correo" ></ion-input>
+         </ion-item>
+       <div class="error-messages">
+          <ng-container *ngFor="let error of error_messages.correo" >
+             <div class="error-message" *ngIf="loginForm.get('correo').hasError(error.type) && (loginForm.get('correo').dirty || loginForm.get('correo').touched)"  >
+               {{error.message}}
+             </div> 
+          </ng-container>   
+       </div>
+  
+  
+        
+        
+         <ion-item> 
+            <ion-label position="floating">Password</ion-label>  
+            <ion-input type="password" formControlName="password"  [(ngModel)]="usuario.pasword"></ion-input>
+         </ion-item>
+            <div class="error-messages">
+               <ng-container *ngFor="let error of error_messages.password" >
+                  <div class="error-message" *ngIf="loginForm.get('password').hasError(error.type) && (loginForm.get('password').dirty || loginForm.get('password').touched)"  >
+                    {{error.message}}
+                  </div> 
+                </ng-container>   
+            </div>
+  
+
+          <ion-item>
+              <ion-label>Tipo Rol</ion-label>
+              <ion-select value="3" okText="Elegir" cancelText="Descartar" (ionChange)="eventoTipo($event)">
+                <ion-select-option value="1" disabled>Administrador</ion-select-option>
+                <ion-select-option value="2">Auxiliar</ion-select-option>
+                <ion-select-option value="3">Estudiante</ion-select-option>
+
+              </ion-select>
+            </ion-item>
+
+
+  
+        
+          <ion-button [disabled]="!loginForm.valid" shape="round" size="default" expand="block" color="dark" (click)="updateUsuario()" >Actualizar</ion-button>
+          <br>
+          <br>
+        </form>
+
+
+</ion-content>
+  

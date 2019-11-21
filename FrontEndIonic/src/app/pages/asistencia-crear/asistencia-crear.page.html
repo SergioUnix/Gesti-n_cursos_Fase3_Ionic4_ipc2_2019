@@ -1,0 +1,46 @@
+<ion-header>
+    <ion-toolbar color="dark">
+      <ion-title>
+        Realizar Asistencia
+      </ion-title>
+    </ion-toolbar>
+  </ion-header>
+  
+  <ion-content>
+      <ion-item>
+          <ion-label position="floating">Fecha de Asistencia</ion-label>
+          <ion-datetime displayFormat="DD/MMM/YYYY" min="2019-01-01" max="2026-12-09" (ionChange)="eventoFecha($event)"></ion-datetime>
+        </ion-item>
+
+      <ion-card class="welcome-card" *ngFor="let ac of usuarios_curso">
+        <img src="" alt="" />
+        <ion-card-header>
+            
+          <ion-card-subtitle>Carnet: {{ac.carne}}  </ion-card-subtitle>
+          <ion-card-title>Nombre: {{ac.nombre}} </ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <p>Correo: {{ac.correo}}</p>
+         
+
+          <ion-item>
+              <ion-label>Asistencia</ion-label>
+              <ion-select  okText="Elegir" cancelText="Descartar" (ionChange)="eventoAsistencia($event)">
+                <ion-select-option value="Presente">Presente</ion-select-option>
+                <ion-select-option value="Ausente">Ausente</ion-select-option>
+                <ion-select-option value="Tarde">Tarde</ion-select-option>
+              </ion-select>
+            </ion-item>
+
+
+          <ion-button color="tertiary" expand="full" (click)="saveAsistencia(ac.cod_asignacion_estudiante)">Aplicar Asistencia</ion-button>
+        </ion-card-content>
+      </ion-card>
+      
+      
+
+
+  
+  
+  </ion-content>
+  

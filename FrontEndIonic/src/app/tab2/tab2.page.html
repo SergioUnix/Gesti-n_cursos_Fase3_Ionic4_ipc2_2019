@@ -1,0 +1,39 @@
+<ion-header>
+    <ion-toolbar color="dark">
+      <ion-title>
+        Cursos Asignados
+      </ion-title>
+    </ion-toolbar>
+  </ion-header>
+  
+  <ion-content>
+  
+      <ion-card class="welcome-card" *ngFor="let aux of asig_Auxiliares">
+        <img src="" alt="" />
+        <ion-card-header>
+            
+          <ion-card-subtitle>Semestre : {{aux.semestre}}   </ion-card-subtitle>
+          <ion-card-title>{{aux.curso}}</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+
+            <p>Año : {{aux.anio}}</p>
+            <p>Fecha limite de Asignación : {{aux.fecha_limite | date: 'yyy-MM-dd'}}</p>
+            <p>Auxiliar : {{aux.auxiliar}}</p>
+            <p>Curso : {{aux.curso}}</p>
+            <p>Sección : {{aux.seccion}}</p>
+            <p>Hora Inicio : {{aux.hora_inicio}} hrs</p>
+            <p>Hora Final : {{aux.hora_final}} hrs</p>
+
+          <ion-button color="dark" expand="full" [routerLink]="['/foro', aux.cod_asignacion_auxiliar]">Ver Foro de Curso</ion-button>
+          <ion-button color="tertiary" expand="full" [routerLink]="['/asistencia-crear', aux.cod_asignacion_auxiliar]">Asistencias</ion-button>
+         
+   
+  
+        </ion-card-content>
+      </ion-card>
+      
+  
+  
+  </ion-content>
+  

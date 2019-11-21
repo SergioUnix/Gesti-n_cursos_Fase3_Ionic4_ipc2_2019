@@ -1,0 +1,47 @@
+<ion-header>
+  <ion-toolbar color="dark">
+    <ion-title test-center >Login</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content ><br><br><br>
+    <img class="icon" src="assets/icon/logo.jpg" alt="">
+
+    <form [formGroup]="loginForm">
+    <ion-item> 
+        <ion-label position="floating">Correo</ion-label>  
+        <ion-input type="text" formControlName="correo" [(ngModel)]="correo" ></ion-input>
+       </ion-item>
+     <div class="error-messages">
+        <ng-container *ngFor="let error of error_messages.correo" >
+           <div class="error-message" *ngIf="loginForm.get('correo').hasError(error.type) && (loginForm.get('correo').dirty || loginForm.get('correo').touched)"  >
+             {{error.message}}
+           </div> 
+        </ng-container>   
+     </div>
+
+
+      
+      
+       <ion-item> 
+          <ion-label position="floating">Password</ion-label>  
+          <ion-input type="password" formControlName="password"  [(ngModel)]="pass"></ion-input>
+       </ion-item>
+          <div class="error-messages">
+             <ng-container *ngFor="let error of error_messages.password" >
+                <div class="error-message" *ngIf="loginForm.get('password').hasError(error.type) && (loginForm.get('password').dirty || loginForm.get('password').touched)"  >
+                  {{error.message}}
+                </div> 
+              </ng-container>   
+          </div>
+
+
+      
+        <ion-button [disabled]="!loginForm.valid" shape="round" size="default" expand="block" color="dark" (click)="setUsuario()" >Entrar</ion-button>
+        <br>
+        <br>
+      </form>
+      <ion-button shape="round" fill="outline" color="dark" [routerLink]="['/registro/']">Registrar</ion-button>
+      <ion-button shape="round" fill="outline" color="medium" [routerLink]="['/registro-olvido/']">Olvido contraseña?</ion-button>
+
+</ion-content>

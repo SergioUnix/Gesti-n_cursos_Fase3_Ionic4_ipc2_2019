@@ -1,0 +1,62 @@
+<ion-header>
+    <ion-toolbar color="dark">
+      <ion-title test-center >Actualizar Datos</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  
+  <ion-content >
+
+     
+
+          <ion-item> 
+              <ion-label position="floating">Nombre</ion-label>  
+              <ion-input type="text" Name="nombre" [(ngModel)]="curso.nombre"></ion-input>
+             </ion-item>
+
+      
+      
+            
+            
+             <ion-item> 
+                <ion-label position="floating">Descripción</ion-label>  
+                <ion-input type="descripcion" Name="descripcion"  [(ngModel)]="curso.descripcion" ></ion-input>
+             </ion-item>
+               
+  
+  
+
+
+  
+  
+
+          <ion-item>
+              <ion-label>Lista de Horarios</ion-label>
+              <ion-select  okText="Elegir" cancelText="Descartar" [(ngModel)]="curso.cod_horario_fk"(ionChange)="eventoHorario($event)">
+                <ion-select-option [value]="horario.cod_horario"*ngFor="let horario of horarios"> {{horario.hora_inicio }} {{horario.hora_final}} Hrs </ion-select-option>
+              </ion-select>
+            </ion-item>
+
+
+            <ion-item>
+                <ion-label>Lista de Secciones</ion-label>
+                <ion-select  okText="Elegir" cancelText="Descartar" [(ngModel)]="curso.cod_seccion_fk" (ionChange)="eventoSeccion($event)">
+                  <ion-select-option [value]="seccion.cod_seccion" *ngFor="let seccion of secciones">  Cod: {{seccion.cod_seccion}} {{seccion.nombre}}</ion-select-option>
+                </ion-select>
+              </ion-item>
+
+  
+        
+          <ion-button  shape="round" size="default" expand="block" color="dark" (click)="updateCurso()" >Actualizar</ion-button>
+          <br>
+          <br>
+ 
+
+
+
+
+
+
+
+
+
+  </ion-content>

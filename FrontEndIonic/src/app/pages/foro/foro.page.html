@@ -1,0 +1,84 @@
+<ion-header>
+    <ion-toolbar color="dark">
+      <ion-title test-center >Foro</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  
+  <ion-content >
+
+      <ion-card class="welcome-card" *ngFor="let asig of foro">
+        
+          <ion-card-header>
+            <ion-card-title>Nombre: {{asig.nombre}}</ion-card-title>  
+            
+            
+          </ion-card-header>
+          <ion-card-content>
+            <p>Fecha limite de publicación: {{asig.fecha | date: 'yyy-MM-dd'}}</p>
+            <p>Hora limite de publicación: {{asig.hora_limite}}</p>
+            <p>Descripción: {{asig.descripcion}}</p>
+           
+          </ion-card-content>
+        </ion-card>
+
+
+
+
+
+
+
+      <form [formGroup]="loginForm">
+
+          <ion-item> 
+              <ion-label position="floating">Crear Publicación</ion-label>  
+              <ion-input type="text" formControlName="nombre" [(ngModel)]="publicacion.comentario"></ion-input>
+             </ion-item>
+           <div class="error-messages">
+              <ng-container *ngFor="let error of error_messages.nombre" >
+                 <div class="error-message" *ngIf="loginForm.get('nombre').hasError(error.type) && (loginForm.get('nombre').dirty || loginForm.get('nombre').touched)"  >
+                   {{error.message}}
+                 </div> 
+              </ng-container>   
+           </div>
+      
+      
+            
+  
+        
+          <ion-button [disabled]="!loginForm.valid" shape="round" size="default" expand="block" color="dark" (click)="savePadre()" >Publicar</ion-button>
+          <br>
+          <br>
+        </form>
+
+
+
+
+
+    <ion-card class="welcome-card" *ngFor="let publi of pu_padres">
+        
+        <ion-card-header>
+            
+          <ion-card-subtitle>{{publi.rol}}  </ion-card-subtitle>
+          <ion-card-title>{{publi.nombre}}</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <p>Mensaje: {{publi.comentario}}</p>
+         
+         
+
+        
+
+        </ion-card-content>
+        <h5><ion-icon name="happy"></ion-icon><ion-icon name="sad"></ion-icon> {{publi.me_gusta}} personas</h5>
+        <ion-button size="small"color="light" (click)="meGusta(publi.cod_publicacion, publi.me_gusta)"> <ion-icon name="thumbs-up" ></ion-icon>Me Gusta   </ion-button>
+      <ion-button size="small"color="dark" [routerLink]="['/foro/publicacion', publi.cod_publicacion]">Comentar</ion-button>
+      
+      </ion-card>
+    
+
+
+
+
+
+
+  </ion-content>

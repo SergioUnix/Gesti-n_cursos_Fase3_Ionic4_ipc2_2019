@@ -1,0 +1,61 @@
+<ion-header>
+    <ion-toolbar color="dark">
+      <ion-title test-center >Recuperar Contraseña</ion-title>
+
+      <ion-buttons slot="start">
+          <ion-button [routerLink]="['/logueo']">
+                <ion-icon slot="icon-only" name="arrow-round-back"></ion-icon>     
+          </ion-button>        
+        </ion-buttons>
+
+    </ion-toolbar>
+  </ion-header>
+  
+  <ion-content>
+        
+      <form [formGroup]="loginForm">
+
+          <ion-item> 
+              <ion-label position="floating">Ingrese Correo </ion-label>  
+              <ion-input type="text" formControlName="nombre" [(ngModel)]="correo" ></ion-input>
+             </ion-item>
+           <div class="error-messages">
+              <ng-container *ngFor="let error of error_messages.nombre" >
+                 <div class="error-message" *ngIf="loginForm.get('nombre').hasError(error.type) && (loginForm.get('nombre').dirty || loginForm.get('nombre').touched)"  >
+                   {{error.message}}
+                 </div> 
+              </ng-container>   
+           </div>
+      
+      
+            
+  
+        
+          <ion-button [disabled]="!loginForm.valid" shape="round" size="default" expand="block" color="primary" (click)="existUsuario()" >Recuperar</ion-button>
+          <br>
+          <br>
+        </form>
+
+
+
+
+
+
+
+        <ion-chip color="danger" [routerLink]="['/registro-olvido-restablecer']" >
+            <ion-avatar>
+              <img src="http://segurinfor.net/wp-content/uploads/2016/03/icono-password.png">
+            </ion-avatar>
+            <ion-label >Ingresar Contraseña de Recuperación</ion-label>
+            
+          </ion-chip>
+
+  </ion-content>
+  
+
+
+
+
+
+
+

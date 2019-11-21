@@ -1,0 +1,62 @@
+<ion-header>
+    <ion-toolbar color="dark">
+      <ion-title test-center >Registro de Usuario</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  
+  <ion-content>
+        
+      <form [formGroup]="loginForm">
+
+          <ion-item> 
+              <ion-label position="floating">Nombre</ion-label>  
+              <ion-input type="text" formControlName="nombre" [(ngModel)]="seccion.nombre" ></ion-input>
+             </ion-item>
+           <div class="error-messages">
+              <ng-container *ngFor="let error of error_messages.nombre" >
+                 <div class="error-message" *ngIf="loginForm.get('nombre').hasError(error.type) && (loginForm.get('nombre').dirty || loginForm.get('nombre').touched)"  >
+                   {{error.message}}
+                 </div> 
+              </ng-container>   
+           </div>
+      
+      
+            
+  
+        
+          <ion-button [disabled]="!loginForm.valid" shape="round" size="default" expand="block" color="dark" (click)="saveSeccion()" >Entrar</ion-button>
+          <br>
+          <br>
+        </form>
+  </ion-content>
+  
+
+
+
+
+
+
+
+
+   
+
+<ion-content>
+    <ion-list>
+      <ion-item-sliding *ngFor="let ho of secciones">
+        <ion-item  >
+          <ion-label >{{ ho.cod_seccion }}  </ion-label>
+          <ion-label >{{ ho.nombre }} </ion-label>
+
+           <ion-icon name="bookmarks"slot="start"></ion-icon>
+        </ion-item>
+        <ion-item-options side="end">
+          <ion-item-option   color="secondary" [routerLink]="['/seccion-edit/', ho.cod_seccion]">
+            <ion-icon name="create"></ion-icon>
+          </ion-item-option>
+          <ion-item-option   color="danger" (click)="deleteSeccion(ho.cod_seccion)">
+              <ion-icon name="trash"></ion-icon>
+            </ion-item-option>
+        </ion-item-options>
+      </ion-item-sliding>
+    </ion-list>  
+  </ion-content>

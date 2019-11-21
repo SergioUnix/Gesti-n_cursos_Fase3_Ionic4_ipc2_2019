@@ -1,0 +1,87 @@
+
+
+<ion-app>
+  <ion-menu *ngIf="true"  side="end" 
+  menuId="primerMenu"
+  contentId="principal" > 
+      <ion-header>
+        <ion-toolbar color="dark">
+          <ion-title>Menu Principal</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content>
+          <ion-list >
+              <ion-item [routerLink]="['/tabs/tab1']"*ngIf="estudiante_funcion"> <ion-icon name="home"></ion-icon>    Inicio    </ion-item>
+          </ion-list >
+          <ion-list >
+                <ion-item [routerLink]="['/tabs/tab2']"*ngIf="auxiliar_funcion"> <ion-icon name="home"></ion-icon>    Inicio    </ion-item>
+            </ion-list >
+
+          <ion-list *ngIf="auxiliar_funcion">
+              <ion-item [routerLink]="['/evaluacion']"color="tertiary">     Crear Evaluación    </ion-item>
+          </ion-list >
+          <ion-list  *ngIf="auxiliar_funcion">
+              <ion-item [routerLink]="['/actividad']"color="tertiary">     Crear Actividades    </ion-item>
+          </ion-list>
+          <ion-list *ngIf="auxiliar_funcion">
+              <ion-item [routerLink]="['/actividades-cursos-calificar']"color="tertiary">     Calificar Actividades    </ion-item>
+          </ion-list >
+          <ion-list *ngIf="auxiliar_funcion">
+              <ion-item [routerLink]="['/tabs/tab2']"color="tertiary">     Cursos Asignados    </ion-item>
+          </ion-list >
+
+
+          <ion-list *ngIf="estudiante_funcion">
+                <ion-item [routerLink]="['/ticket']"color="success">   crear ticket      </ion-item>
+            </ion-list >
+            <ion-list *ngIf="estudiante_funcion">
+                <ion-item [routerLink]="['/ver-notas']"color="success"> ver notas de Actividades    </ion-item>
+            </ion-list >
+  
+
+
+
+          <ion-list *ngIf="admin_funcion">
+              <ion-item [routerLink]="['/horario-form/']">     Crear horario     </ion-item>
+          </ion-list >
+          <ion-list *ngIf="admin_funcion">
+              <ion-item [routerLink]="['/seccion-form/']">     Crear Sección     </ion-item>
+          </ion-list>
+          <ion-list *ngIf="admin_funcion">
+              <ion-item [routerLink]="['/curso/']">     Crear Curso         </ion-item>
+          </ion-list>
+          <ion-list *ngIf="admin_funcion">
+                <ion-item [routerLink]="['registro-auxiliar']">    Registar Auxiliar   </ion-item>
+            </ion-list>
+
+          <ion-list *ngIf="admin_funcion">
+              <ion-item [routerLink]="['asignacion-auxiliar']">     Asignar Auxiliar   </ion-item>
+          </ion-list>
+
+          <ion-list *ngIf="admin_funcion">
+                <ion-item [routerLink]="['auxiliar-desasignar']">   Desasignar Auxiliar   </ion-item>
+            </ion-list>
+          <ion-list *ngIf="admin_funcion">
+                <ion-item [routerLink]="['ticket-admin']"> Seguimiento Ticket   </ion-item>
+          </ion-list>
+  
+          <ion-list *ngIf="admin_funcion">
+              <ion-item [routerLink]="['/lista-usuarios/']">   <ion-icon name="build"></ion-icon> Gestión de Usuarios</ion-item>
+          </ion-list>
+
+          <ion-list *ngIf="admin_funcion">
+                <ion-item [routerLink]="['/reporte-asistencia/']">   Reporte Asistencia</ion-item>
+            </ion-list>
+
+        <ion-list>
+            <ion-item (click)="cerrarSesion()">      <ion-icon name="power"></ion-icon> Cerrar Sesión     </ion-item>
+        </ion-list>
+
+
+
+      </ion-content>
+    </ion-menu>
+
+
+<ion-router-outlet id="principal"></ion-router-outlet>
+</ion-app>

@@ -1,0 +1,38 @@
+<ion-header>
+    <ion-toolbar color="dark">
+      <ion-title test-center >Seguimiento de Ticket</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  
+  <ion-content >
+
+
+        <ion-card class="welcome-card" *ngFor="let tic of tickets_usuario">
+            <img src="" alt="" />
+            <ion-card-header>
+                
+              <ion-card-subtitle>  <p>Estado : {{tic.estado}} </p>   </ion-card-subtitle>
+              <ion-card-title> <p>Asunto : {{tic.asunto}}</p> </ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+                <p>Usuario Creador: {{tic.nombre}}</p>
+                <p>Cuerpo : {{tic.cuerpo}}</p>
+                <ion-button size="small"color="dark" (click)="updateEstado('1',tic.cod_ticket)">Enviado</ion-button>
+                <ion-button size="small"color="medium" (click)="updateEstado('2',tic.cod_ticket)">Recibido</ion-button>
+                <ion-button size="small"color="secondary" (click)="updateEstado('3',tic.cod_ticket)">En Proceso</ion-button>
+                <ion-button size="small"color="warning" (click)="updateEstado('4',tic.cod_ticket)">Finalizado</ion-button>
+            </ion-card-content>
+          </ion-card>
+        
+
+
+
+
+
+
+
+
+
+
+  </ion-content>
+  

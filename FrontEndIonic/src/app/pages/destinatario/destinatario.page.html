@@ -1,0 +1,54 @@
+<ion-header>
+    <ion-toolbar color="dark">
+      <ion-title>
+        Enviar Mensaje
+      </ion-title>
+
+      <ion-buttons slot="start">
+          <ion-button [routerLink]="['/tabs/tab3']">
+                <ion-icon slot="icon-only" name="arrow-round-back"></ion-icon>     
+          </ion-button>        
+        </ion-buttons>
+
+    </ion-toolbar>
+  </ion-header>
+
+  
+
+  <ion-content>
+
+
+
+    <ion-list class="line-input"> 
+
+
+
+        <ion-item>
+            <ion-label>Destinatario</ion-label>
+            <ion-select  okText="Elegir" cancelText="Descartar" (ionChange)="eventoUsuario($event)">
+              <ion-select-option [value]="usuario.cod_usuario"*ngFor="let usuario of usuarios">{{usuario.correo}} </ion-select-option>
+            </ion-select>
+          </ion-item>
+          
+
+        <ion-item> 
+          <ion-icon name="happy"></ion-icon>
+          <ion-input class="ion-text-left" placeholder= "Asunto"[(ngModel)]="mensaje.asunto" ></ion-input>  
+          
+             
+        </ion-item> 
+
+        <ion-item> 
+
+            <ion-input class="ion-text-left" placeholder= "Mensaje" [(ngModel)]="mensaje.cuerpo" ></ion-input> 
+  
+          </ion-item> 
+          <ion-item> 
+              <ion-icon name=filing></ion-icon>
+              <ion-input class="ion-text-left" placeholder= "Archivo Adjunto" [(ngModel)]="mensaje.archivos_adjuntos" ></ion-input> 
+                    
+            </ion-item> 
+      </ion-list> 
+    
+      <ion-button  shape="round" size="default" expand="block" color="secondary" (click)="saveMensaje()" >Enviar </ion-button>    
+    </ion-content>

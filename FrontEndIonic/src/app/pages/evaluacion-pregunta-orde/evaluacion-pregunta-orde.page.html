@@ -1,0 +1,137 @@
+<ion-header>
+    <ion-toolbar color="dark">
+      <ion-title test-center >Preguntas Ordering</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  
+  <ion-content >
+
+      <form [formGroup]="loginForm">
+
+
+          <ion-item> 
+              <ion-label position="floating">Escribir Pregunta</ion-label>  
+              <ion-input type="text" formControlName="nombre"   [(ngModel)]="pregunta.pregunta" ></ion-input>
+             </ion-item>
+           <div class="error-messages">
+              <ng-container *ngFor="let error of error_messages.nombre" >
+                 <div class="error-message" *ngIf="loginForm.get('nombre').hasError(error.type) && (loginForm.get('nombre').dirty || loginForm.get('nombre').touched)"  >
+                   {{error.message}}
+                 </div> 
+              </ng-container>   
+           </div>
+      
+
+
+           <ion-item> 
+              <ion-label position="floating">Respuesta Correcta</ion-label>  
+              <ion-input type="text" formControlName="respuesta" placeholder="Respuesta Correcta" [(ngModel)]="pregunta.correcta"></ion-input>
+             </ion-item>
+           <div class="error-messages">
+              <ng-container *ngFor="let error of error_messages.respuesta" >
+                 <div class="error-message" *ngIf="loginForm.get('respuesta').hasError(error.type) && (loginForm.get('respuesta').dirty || loginForm.get('respuesta').touched)"  >
+                   {{error.message}}
+                 </div> 
+              </ng-container>   
+           </div>
+
+
+           <ion-item> 
+              <ion-label position="floating">Opción 1</ion-label>  
+              <ion-input type="text" formControlName="opcion1" placeholder="Opción de Respuesta" [(ngModel)]="pregunta.opcion1"></ion-input>
+             </ion-item>
+           <div class="error-messages">
+              <ng-container *ngFor="let error of error_messages.opcion1" >
+                 <div class="error-message" *ngIf="loginForm.get('opcion1').hasError(error.type) && (loginForm.get('opcion1').dirty || loginForm.get('opcion1').touched)"  >
+                   {{error.message}}
+                 </div> 
+              </ng-container>   
+           </div>
+
+
+
+
+           <ion-item> 
+              <ion-label position="floating">Opción 2</ion-label>  
+              <ion-input type="text" formControlName="opcion2" placeholder="Opción de Respuesta"  [(ngModel)]="pregunta.opcion2"></ion-input>
+             </ion-item>
+           <div class="error-messages">
+              <ng-container *ngFor="let error of error_messages.opcion2" >
+                 <div class="error-message" *ngIf="loginForm.get('opcion2').hasError(error.type) && (loginForm.get('opcion2').dirty || loginForm.get('opcion2').touched)"  >
+                   {{error.message}}
+                 </div> 
+              </ng-container>   
+           </div>
+
+
+
+           <ion-item> 
+              <ion-label position="floating">Opcion 3</ion-label>  
+              <ion-input type="text" formControlName="opcion3" placeholder="Opción de Respuesta"  [(ngModel)]="pregunta.opcion3"></ion-input>
+             </ion-item>
+           <div class="error-messages">
+              <ng-container *ngFor="let error of error_messages.opcion3" >
+                 <div class="error-message" *ngIf="loginForm.get('opcion3').hasError(error.type) && (loginForm.get('opcion3').dirty || loginForm.get('opcion3').touched)"  >
+                   {{error.message}}
+                 </div> 
+              </ng-container>   
+           </div>
+
+
+           <ion-item> 
+              <ion-label position="floating">Opcion 4</ion-label>  
+              <ion-input type="text" formControlName="opcion4" placeholder="Opción de Respuesta"  [(ngModel)]="pregunta.opcion4"></ion-input>
+             </ion-item>
+           <div class="error-messages">
+              <ng-container *ngFor="let error of error_messages.opcion4" >
+                 <div class="error-message" *ngIf="loginForm.get('opcion4').hasError(error.type) && (loginForm.get('opcion4').dirty || loginForm.get('opcion4').touched)"  >
+                   {{error.message}}
+                 </div> 
+              </ng-container>   
+           </div>
+
+           <ion-item> 
+              <ion-label position="floating">Opcion 5</ion-label>  
+              <ion-input type="text" formControlName="opcion5" placeholder="Opción de Respuesta"  [(ngModel)]="pregunta.opcion5"></ion-input>
+             </ion-item>
+           <div class="error-messages">
+              <ng-container *ngFor="let error of error_messages.opcion5" >
+                 <div class="error-message" *ngIf="loginForm.get('opcion5').hasError(error.type) && (loginForm.get('opcion5').dirty || loginForm.get('opcion5').touched)"  >
+                   {{error.message}}
+                 </div> 
+              </ng-container>   
+           </div>
+  
+
+
+  
+        
+          <ion-button [disabled]="!loginForm.valid" shape="round" size="default" expand="block" color="dark" (click)="savePregunta()" >Crear</ion-button>
+          <br>
+          <br>
+        </form>
+
+
+
+
+
+    <ion-card class="welcome-card" *ngFor="let eva of multiple">
+        <img src="" alt="" />
+        <ion-card-header>
+            
+          <ion-card-subtitle>   </ion-card-subtitle>
+          <ion-card-title>{{eva.pregunta}} </ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+            <p>Respuesta:  {{eva.correcta}}</p>
+            <p>Opción 1: {{eva.opcion1}}</p>
+            <p>Opción 2: {{eva.opcion2}}</p>
+            <p>Opción 3: {{eva.opcion3}}</p>
+            <p>Opción 4: {{eva.opcion4}}</p>
+            <p>Opción 5: {{eva.opcion5}}</p>
+        </ion-card-content>
+      </ion-card>
+    
+
+
+  </ion-content>
